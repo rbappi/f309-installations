@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+import copy
+
 AGENT = f"""
         kerberos-agent1:
             image: "kerberos/agent:latest"
@@ -62,7 +64,7 @@ def generate_yaml_file():
     print(f"Your hub username is {hub_username}")
 
     for i in range(int(nmbr_of_agent)):
-        agent = AGENT
+        agent = copy.deepcopy(AGENT)
         agent = agent.replace("ports:\n            - \"\"", f"ports:\n            - \"{8081+i}:80\"" )
         agent = agent.replace("kerberos-agent1", f"kerberos-agent{i+1}")
         agent = agent.replace("AGENT_NAME=", f"AGENT_NAME=kerberos-agent{i+1}")

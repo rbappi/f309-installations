@@ -19,5 +19,5 @@ if [ "$req" != "y" ]; then
     echo "Exiting program"
     exit
 fi
-sudo apt-get install bash
+python3 agent_generator.py
 
