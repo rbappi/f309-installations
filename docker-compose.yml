@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+
+        kerberos-agent1:
+            image: "kerberos/agent:latest"
+            ports:
+            - "8081:80"
+            environment:
+            - AGENT_NAME=kerberos-agent1
+            - AGENT_USERNAME=root
+            - AGENT_PASSWORD=root
+            - AGENT_HUB_KEY=james
+            - AGENT_HUB_PRIVATE_KEY=momo
+            - AGENT_HUB_USERNAME=momo
+        
+        kerberos-agent2:
+            image: "kerberos/agent:latest"
+            ports:
+            - "8082:80"
+            environment:
+            - AGENT_NAME=kerberos-agent2
+            - AGENT_USERNAME=root
+            - AGENT_PASSWORD=root
+            - AGENT_HUB_KEY=james
+            - AGENT_HUB_PRIVATE_KEY=momo
+            - AGENT_HUB_USERNAME=momo
+        
