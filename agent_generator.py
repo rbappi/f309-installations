@@ -5,6 +5,8 @@ import copy
 AGENT = f"""
         kerberos-agent1:
             image: "kerberos/agent:latest"
+            container_name: "kerberos-agent1"
+            restart: always
             ports:
             - ""
             environment:
@@ -67,6 +69,7 @@ def generate_yaml_file():
         agent = copy.deepcopy(AGENT)
         agent = agent.replace("ports:\n            - \"\"", f"ports:\n            - \"{8081+i}:80\"" )
         agent = agent.replace("kerberos-agent1", f"kerberos-agent{i+1}")
+        agent = agent.replace("container_name: \"kerberos-agent1\"", f"container_name: \"kerberos-agent{i+1}\"")
         agent = agent.replace("AGENT_NAME=", f"AGENT_NAME=kerberos-agent{i+1}")
         agent = agent.replace("AGENT_USERNAME=", f"AGENT_USERNAME={username}")
         agent = agent.replace("AGENT_PASSWORD=", f"AGENT_PASSWORD={password}")
