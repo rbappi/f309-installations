@@ -19,26 +19,26 @@ AGENT = f"""
         """
 
 
-def generate_yaml_file():
-    nmbr_of_agent = 0
+def generate_compose_file():
+    nmbr_of_agent = ""
     username = ""
     password = ""
     hub_key = ""
     hub_private_key = ""
     hub_username = ""
     agents_to_create = []
-    while nmbr_of_agent == 0:
+    while not(nmbr_of_agent.isnumeric()) or int(nmbr_of_agent) == 0:
         print("How many agents do you want to create ? (max 20)")
         nmbr_of_agent = input()
-        if int(nmbr_of_agent) == 0:
-            print("Your input must be at least 1")
+        if not(nmbr_of_agent.isnumeric()) or int(nmbr_of_agent) == 0:
+            print("Your input must be at least 1 and a number")
 
-    print("What username do you wish to have to login to your agents")
+    print("What username do you wish to have to login to your agents ? (type ENTER for default: root)")
     username = input()
     if username == "":
         username = "root"
     print(f"Your username is {username}")
-    print("What password do you wish to have to login to your agents")
+    print("What password do you wish to have to login to your agents ? (type ENTER for default: root)")
     password = input()
     if password == "":
         password = "root"
@@ -67,10 +67,10 @@ def generate_yaml_file():
 
     for i in range(int(nmbr_of_agent)):
         agent = copy.deepcopy(AGENT)
-        agent = agent.replace("ports:\n            - \"\"", f"ports:\n            - \"{8081+i}:80\"" )
-        agent = agent.replace("kerberos-agent1", f"kerberos-agent{i+1}")
-        agent = agent.replace("container_name: \"kerberos-agent1\"", f"container_name: \"kerberos-agent{i+1}\"")
-        agent = agent.replace("AGENT_NAME=", f"AGENT_NAME=kerberos-agent{i+1}")
+        agent = agent.replace("ports:\n            - \"\"", f"ports:\n            - \"{8081 + i}:80\"")
+        agent = agent.replace("kerberos-agent1", f"kerberos-agent{i + 1}")
+        agent = agent.replace("container_name: \"kerberos-agent1\"", f"container_name: \"kerberos-agent{i + 1}\"")
+        agent = agent.replace("AGENT_NAME=", f"AGENT_NAME=kerberos-agent{i + 1}")
         agent = agent.replace("AGENT_USERNAME=", f"AGENT_USERNAME={username}")
         agent = agent.replace("AGENT_PASSWORD=", f"AGENT_PASSWORD={password}")
         agent = agent.replace("AGENT_HUB_KEY=", f"AGENT_HUB_KEY={hub_key}")
@@ -84,9 +84,10 @@ def generate_yaml_file():
         for agent in agents_to_create:
             f.write(agent)
 
-
-
+    with open("agent_list.txt", "w") as f:
+        for i in range(int(nmbr_of_agent)):
+            f.write(f"kerberos-agent{i + 1} @port: {8081 + i}\n")
 
 
 if __name__ == "__main__":
-    generate_yaml_file()
+    generate_compose_file()
