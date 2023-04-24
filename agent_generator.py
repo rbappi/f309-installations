@@ -92,7 +92,8 @@ def generate_compose_file():
 
     with open("agent_list.txt", "w") as f:
         for i in range(int(nmbr_of_agent)):
-            f.write(f"kerberos-agent{i + 1} @port: {8081 + i}\n")
+            abs_path = os.path.abspath(f"../kerberos/agent{i + 1}/recordings")
+            f.write(f"kerberos-agent{i + 1} @port: {8081 + i}; @path of recordings: {abs_path}\n")
 
 
 if __name__ == "__main__":
