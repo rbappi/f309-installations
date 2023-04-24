@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import copy
+import os
 
 AGENT = f"""
         kerberos-agent1:
@@ -16,6 +17,8 @@ AGENT = f"""
             - AGENT_HUB_KEY=
             - AGENT_HUB_PRIVATE_KEY=
             - AGENT_HUB_USERNAME=
+            volumes:
+            - ../kerberos/agent1/recordings:/home/agent/data/recordings
         """
 
 
@@ -66,6 +69,8 @@ def generate_compose_file():
     print(f"Your hub username is {hub_username}")
 
     for i in range(int(nmbr_of_agent)):
+        path_dvr = "../kerberos/agent" + str(i + 1) + "/recordings"
+        os.makedirs(path_dvr, exist_ok=True)
         agent = copy.deepcopy(AGENT)
         agent = agent.replace("ports:\n            - \"\"", f"ports:\n            - \"{8081 + i}:80\"")
         agent = agent.replace("kerberos-agent1", f"kerberos-agent{i + 1}")
@@ -76,6 +81,7 @@ def generate_compose_file():
         agent = agent.replace("AGENT_HUB_KEY=", f"AGENT_HUB_KEY={hub_key}")
         agent = agent.replace("AGENT_HUB_PRIVATE_KEY=", f"AGENT_HUB_PRIVATE_KEY={hub_private_key}")
         agent = agent.replace("AGENT_HUB_USERNAME=", f"AGENT_HUB_USERNAME={hub_username}")
+        agent = agent.replace("../kerberos/agent1/recordings", path_dvr)
         agents_to_create += [agent]
 
     with open("docker-compose.yml", "w") as f:

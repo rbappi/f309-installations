@@ -29,12 +29,16 @@ if [ "$req" == "n" ]; then
     exit
 fi
 
-
+mkdir ../kerberos
 
 # Generate the docker compose file for kerberos
 python3 agent_generator.py
+echo -e "${RED}Successfully created the compose file${RESET}"
 # Install the docker compose file
 docker compose -p kerberos -f docker-compose.yml up -d
+echo -e "${RED}Successfully installed Kerberos Agents${RESET}"
 # Install Shinobi on port 8080
 bash <(curl -s https://gitlab.com/Shinobi-Systems/Shinobi-Installer/raw/master/shinobi-docker.sh)
+echo -e "${RED}Successfully installed Shinobi${RESET}"
+echo -e "${GREEN}The installation has been completed, refer to the instructions document for more info${RESET}"
 
