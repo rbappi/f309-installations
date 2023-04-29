@@ -38,7 +38,6 @@ echo -e "${RED}Successfully created the compose file${RESET}"
 docker compose -p kerberos -f docker-compose.yml up -d
 echo -e "${RED}Successfully installed Kerberos Agents${RESET}"
 # Install Shinobi on port 8080
-sudo apt-get install docker-compose
 
 bash <(curl -s https://gitlab.com/Shinobi-Systems/Shinobi-Installer/raw/master/shinobi-docker.sh)
 echo -e "${RED}Successfully installed Shinobi${RESET}"
