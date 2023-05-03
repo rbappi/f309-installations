@@ -31,7 +31,7 @@ def generate_compose_file():
     hub_username = ""
     agents_to_create = []
     while not(nmbr_of_agent.isnumeric()) or int(nmbr_of_agent) == 0:
-        print("How many agents do you want to create ? (max 20)")
+        print("How many agents do you want to create ?")
         nmbr_of_agent = input()
         if not(nmbr_of_agent.isnumeric()) or int(nmbr_of_agent) == 0:
             print("Your input must be at least 1 and a number")
