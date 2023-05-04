@@ -3,6 +3,7 @@
 import copy
 import os
 
+# Template du docker-compose.yml
 AGENT = f"""
         kerberos-agent1:
             image: "kerberos/agent:latest"
@@ -23,6 +24,7 @@ AGENT = f"""
 
 
 def generate_compose_file():
+    # Fonction de la création des agents
     nmbr_of_agent = ""
     username = ""
     password = ""
